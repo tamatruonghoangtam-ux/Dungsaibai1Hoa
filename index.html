@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cân bằng hoá học – Phần II (Đúng/Sai) – Lớp 11A</title>
+<style>
+:root{--bg:#f7f7f4;--card:#fff;--tx:#1f2328;--mut:#5b6470;--bd:#dcdcd4;--ac:#1d6fa5;--ok:#17803d;--okb:#e3f5ea;--no:#b42318;--nob:#fdeceb}
+@media (prefers-color-scheme:dark){:root{--bg:#16181b;--card:#1f2226;--tx:#e8e8e6;--mut:#9aa3ad;--bd:#343a41;--ac:#6cb6e8;--ok:#5fd68a;--okb:#16301f;--no:#ff8f86;--nob:#3a1c1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.6 Georgia,"Times New Roman",serif;padding:16px}
+.w{max-width:860px;margin:0 auto}
+h1{font-size:1.5rem;margin:.2em 0}
+.sub{color:var(--mut);margin:0 0 12px;font-family:system-ui,sans-serif;font-size:.9rem}
+.bar{position:sticky;top:0;background:var(--bg);padding:8px 0;display:flex;gap:8px;flex-wrap:wrap;z-index:5;font-family:system-ui,sans-serif}
+button{font:inherit;font-size:.85rem;padding:6px 12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;cursor:pointer}
+button:hover{border-color:var(--ac)}
+.q{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin:14px 0}
+.q h2{font-size:1.05rem;margin:0 0 6px;color:var(--ac)}
+.eq{text-align:center;margin:8px 0;overflow-x:auto;white-space:nowrap}
+.tb{overflow-x:auto}
+table{border-collapse:collapse;margin:8px auto;font-size:.92rem}
+td,th{border:1px solid var(--bd);padding:4px 10px;text-align:center}
+svg{display:block;margin:8px auto;max-width:100%;height:auto;stroke:var(--tx);fill:none}
+svg text{fill:var(--tx);stroke:none;font:12px system-ui,sans-serif}
+.it{margin:8px 0;padding:8px 10px;border-radius:8px;border:1px solid transparent}
+.it .t b{margin-right:4px}
+.ans{display:none;margin-top:6px;font-size:.92rem;font-family:system-ui,sans-serif}
+.it.show .ans{display:block}
+.it.show.T{background:var(--okb)}.it.show.F{background:var(--nob)}
+.tag{display:inline-block;font-weight:700;padding:0 8px;border-radius:5px;margin-right:6px}
+.T .tag{color:var(--ok)}.F .tag{color:var(--no)}
+.it:not(.show){cursor:pointer;border-color:var(--bd)}
+.hint{font-size:.8rem;color:var(--mut);font-family:system-ui,sans-serif}
+.note{font-size:.85rem;color:var(--mut);font-family:system-ui,sans-serif;border-top:1px dashed var(--bd);margin-top:20px;padding-top:10px}
+</style></head><body><div class="w">
+<h1>PHẦN II. Câu trắc nghiệm đúng sai</h1>
+<p class="sub">Chủ đề: Cân bằng hoá học – Lớp 11A. Trong mỗi câu, chọn <b>Đúng</b> hoặc <b>Sai</b> ở từng ý a), b), c), d). Bấm vào từng ý để hiện đáp án và giải thích.</p>
+<div class="bar"><button onclick="all(1)">Hiện tất cả đáp án</button><button onclick="all(0)">Ẩn tất cả</button></div>
+<div id="root"></div>
+<p class="note">Đáp án được kiểm tra lại theo kiến thức hoá học. Phần III (trả lời ngắn) không có trong ảnh nên chưa được chuyển.</p>
+</div>
+<script>
+const g=(h)=>`<svg viewBox="0 0 300 170" width="320" role="img">${h}</svg>`;
+const ax='<path d="M30 10V140H280M30 10l-4 8M30 10l4 8M280 140l-8-4M280 140l-8 4"/>';
+const G4=g(ax+'<path d="M32 20C60 90 100 105 140 105H260" /><path d="M32 138C60 90 100 60 140 58H260"/><path stroke-dasharray="3 3" d="M70 12V140M140 12V140M200 12V140M240 12V140"/><text x="40" y="38">(a)</text><text x="42" y="128">(b)</text><text x="64" y="156">t₁</text><text x="134" y="156">t₂</text><text x="195" y="156">t₃</text><text x="234" y="156">t₄</text><text x="250" y="156">Thời gian</text><text x="2" y="80" transform="rotate(-90 8 80)">Nồng độ</text>');
+const G5=g(ax+'<path d="M32 20C70 70 100 90 140 92H270"/><path d="M32 138C70 110 100 94 140 92"/><text x="85" y="62">(a)</text><text x="80" y="124">(b)</text><text x="170" y="84">Trạng thái cân bằng</text><text x="130" y="158">Thời gian</text><text x="2" y="95" transform="rotate(-90 8 95)">Tốc độ phản ứng</text>');
+const G15=g(ax+'<path d="M32 140C45 80 70 55 110 42C150 34 180 32 240 30"/><path stroke-dasharray="3 3" d="M30 30H240M30 70H240"/><text x="4" y="34">~1,7</text><text x="8" y="144">0</text><text x="100" y="156">Thời gian</text><text x="2" y="95" transform="rotate(-90 8 95)">Lượng HI (mol)</text>');
+const Q=[
+{n:1,t:'Trong công nghiệp, ammonia được tổng hợp theo phản ứng sau:',e:'N<sub>2</sub>(g) + 3H<sub>2</sub>(g) ⇌ 2NH<sub>3</sub>(g) &nbsp; Δ<sub>r</sub>H°<sub>298</sub> = −92 kJ &nbsp;(450–500 °C, Fe, 200–300 atm)',i:[
+['Phản ứng (1) được gọi là phản ứng thuận nghịch.',1,'Phản ứng xảy ra đồng thời theo hai chiều (dấu ⇌).'],
+['Phản ứng (1) là phản ứng thu nhiệt.',0,'Δ<sub>r</sub>H° &lt; 0 nên phản ứng thuận <b>toả nhiệt</b>.'],
+['Trong thực tế, phản ứng (1) luôn xảy ra hoàn toàn trong cùng một điều kiện.',0,'Phản ứng thuận nghịch không xảy ra hoàn toàn, luôn còn chất phản ứng dư.'],
+['Biểu thức K<sub>C</sub> của phản ứng (1) là K<sub>C</sub> = [NH<sub>3</sub>]/([N<sub>2</sub>]·[H<sub>2</sub>]).',0,'Phải có luỹ thừa hệ số: K<sub>C</sub> = [NH<sub>3</sub>]² / ([N<sub>2</sub>]·[H<sub>2</sub>]³).']]},
+{n:2,t:'Xét phản ứng thuận nghịch: H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g). Số mol các chất theo thời gian:',e:'<div class="tb"><table><tr><th>Thời gian</th><th>t₀</th><th>t₁</th><th>t₂</th><th>t₃</th><th>t∞</th></tr><tr><td>H<sub>2</sub></td><td>1</td><td>0,6</td><td>0,4</td><td>0,2</td><td>0,2</td></tr><tr><td>I<sub>2</sub></td><td>1</td><td>0,6</td><td>0,4</td><td>0,2</td><td>0,2</td></tr><tr><td>HI</td><td>0</td><td>0,8</td><td>1,2</td><td>1,6</td><td>1,6</td></tr></table></div>',i:[
+['Từ t₀ đến t₃, số mol chất sản phẩm giảm dần còn số mol chất tham gia tăng dần.',0,'Ngược lại: HI (sản phẩm) tăng từ 0 → 1,6; H<sub>2</sub>, I<sub>2</sub> (tham gia) giảm từ 1 → 0,2.'],
+['K<sub>C</sub> = [HI]² / ([H<sub>2</sub>]·[I<sub>2</sub>]).',1,'Hệ số 2 của HI là số mũ trong tử số.'],
+['Bắt đầu từ t₄ thì số mol các chất trong hệ không thay đổi nữa.',1,'Từ t₃ số mol đã không đổi (bằng t∞), nên sau đó cũng không đổi: hệ đã cân bằng.'],
+['Tốc độ phản ứng thuận và nghịch luôn bằng nhau tại mọi thời điểm.',0,'Chỉ bằng nhau khi đạt trạng thái cân bằng.']]},
+{n:3,t:'Cân bằng hoá học là trạng thái của phản ứng thuận nghịch.',i:[
+['Cân bằng hoá học là một cân bằng tĩnh.',0,'Là cân bằng <b>động</b>: phản ứng thuận và nghịch vẫn diễn ra.'],
+['Ở trạng thái cân bằng, các chất không phản ứng với nhau.',0,'Các chất vẫn phản ứng, nhưng tốc độ thuận = tốc độ nghịch.'],
+['Ở trạng thái cân bằng, tốc độ phản ứng thuận bằng tốc độ phản ứng nghịch.',1,'Đây là định nghĩa của trạng thái cân bằng.'],
+['Ở trạng thái cân bằng, nồng độ các chất sản phẩm luôn lớn hơn nồng độ các chất đầu.',0,'Nồng độ chỉ không đổi; chưa chắc sản phẩm lớn hơn (tuỳ hằng số cân bằng).']]},
+{n:4,t:'Đồ thị biểu diễn sự thay đổi nồng độ các chất theo thời gian:',e:G4,i:[
+['Đường (a) mô tả biến thiên nồng độ chất sản phẩm theo thời gian.',0,'Đường (a) giảm dần → chất phản ứng.'],
+['Đường (b) mô tả biến thiên nồng độ chất phản ứng theo thời gian.',0,'Đường (b) tăng dần → chất sản phẩm.'],
+['t₁ không phải là thời điểm bắt đầu trạng thái cân bằng.',1,'t₁ là lúc hai đường cắt nhau (nồng độ bằng nhau), nhưng nồng độ vẫn đang thay đổi.'],
+['t₂ là thời điểm phản ứng đạt trạng thái cân bằng.',1,'Từ t₂ nồng độ các chất không đổi.']]},
+{n:5,t:'Đồ thị biểu diễn sự thay đổi tốc độ phản ứng thuận và nghịch theo thời gian của phản ứng H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g):',e:G5,i:[
+['Đường (a) biểu diễn tốc độ phản ứng thuận: H<sub>2</sub> + I<sub>2</sub> → 2HI.',1,'Ban đầu chỉ có chất đầu nên v thuận lớn nhất rồi giảm dần.'],
+['Đường (b) biểu diễn tốc độ phản ứng nghịch: 2HI → H<sub>2</sub> + I<sub>2</sub>.',1,'v nghịch bằng 0 lúc đầu, tăng dần khi HI được tạo ra.'],
+['Ở trạng thái cân bằng, nồng độ hydrogen, iodine, hydrogen iodide bằng nhau.',0,'Ở cân bằng chỉ có <b>tốc độ</b> thuận = nghịch; nồng độ không đổi nhưng không nhất thiết bằng nhau.'],
+['Ở trạng thái cân bằng, tốc độ phản ứng thuận và nghịch bằng nhau.',1,'Hai đường gặp nhau ở trạng thái cân bằng.']]},
+{n:6,t:'Xét hệ cân bằng 2NO<sub>2</sub>(g) ⇌ N<sub>2</sub>O<sub>4</sub>(g) ở 25 °C:',e:'<div class="tb"><table><tr><th rowspan="2">Thí nghiệm</th><th colspan="2">Nồng độ ban đầu (mol/L)</th><th colspan="2">Nồng độ cân bằng (mol/L)</th></tr><tr><th>C<sub>NO₂</sub></th><th>C<sub>N₂O₄</sub></th><th>[NO<sub>2</sub>]</th><th>[N<sub>2</sub>O<sub>4</sub>]</th></tr><tr><td>1</td><td>0,0000</td><td>0,6700</td><td>0,0547</td><td>0,6430</td></tr><tr><td>2</td><td>0,0500</td><td>0,4460</td><td>0,0457</td><td>0,4480</td></tr></table></div>',i:[
+['Giá trị của biểu thức [NO<sub>2</sub>]²/[N<sub>2</sub>O<sub>4</sub>] gọi là hằng số cân bằng K<sub>C</sub> của phản ứng.',0,'K<sub>C</sub> = [N<sub>2</sub>O<sub>4</sub>]/[NO<sub>2</sub>]² (sản phẩm ở tử). Biểu thức đã cho là nghịch đảo.'],
+['Hằng số cân bằng của thí nghiệm 1, 2 có giá trị xấp xỉ nhau.',1,'TN1: 0,6430/0,0547² ≈ 214,9; TN2: 0,4480/0,0457² ≈ 214,5.'],
+['Nếu thực hiện ở 70 °C thì giá trị của biểu thức [N<sub>2</sub>O<sub>4</sub>]/[NO<sub>2</sub>]² không thay đổi.',0,'K<sub>C</sub> phụ thuộc nhiệt độ, nên đổi khi nhiệt độ đổi.'],
+['K<sub>C</sub> của một phản ứng thuận nghịch phụ thuộc vào nồng độ của các chất.',0,'K<sub>C</sub> chỉ phụ thuộc bản chất phản ứng và nhiệt độ.']]},
+{n:7,t:'Nguyên lí Le Chatelier: “Một phản ứng thuận nghịch đang ở trạng thái cân bằng, khi chịu tác động bên ngoài (nồng độ, áp suất, nhiệt độ) thì cân bằng sẽ chuyển dịch theo chiều làm giảm tác động đó.”',i:[
+['Khi tăng nhiệt độ, cân bằng chuyển dịch theo chiều làm giảm nhiệt độ, tức là chiều nghịch.',0,'Chiều làm giảm nhiệt độ là chiều <b>thu nhiệt</b>, không phải lúc nào cũng là chiều nghịch.'],
+['Khi tăng nồng độ của một chất, cân bằng chuyển dịch theo chiều làm tăng nồng độ của chất đó.',0,'Chuyển dịch theo chiều làm <b>giảm</b> nồng độ chất đó.'],
+['Khi giảm áp suất chung của hệ, cân bằng chuyển dịch theo chiều làm giảm số mol khí.',0,'Giảm áp suất → chiều làm <b>tăng</b> số mol khí.'],
+['Chất xúc tác làm tăng đồng thời tốc độ thuận và nghịch nên làm chuyển dịch cân bằng.',0,'Xúc tác tăng tốc độ hai chiều như nhau nên <b>không</b> làm chuyển dịch cân bằng, chỉ giúp đạt cân bằng nhanh hơn.']]},
+{n:8,t:'Xét hệ cân bằng: 2NO<sub>2</sub>(g) (nâu đỏ) ⇌ N<sub>2</sub>O<sub>4</sub>(g) (không màu), Δ<sub>r</sub>H°<sub>298</sub> &lt; 0. Ba ống nghiệm chứa NO<sub>2</sub> màu giống nhau: ống (1) để so sánh, ống (2) ngâm nước đá, ống (3) ngâm nước nóng (1–2 phút).',i:[
+['Sau một thời gian, màu sắc trong ống nghiệm (2) đậm dần lên.',0,'Làm lạnh → cân bằng dịch theo chiều thuận (toả nhiệt), NO<sub>2</sub> giảm → màu <b>nhạt</b> dần.'],
+['Sau một thời gian, màu sắc trong ống nghiệm (3) nhạt dần đi.',0,'Đun nóng → cân bằng dịch theo chiều nghịch, NO<sub>2</sub> tăng → màu <b>đậm</b> dần.'],
+['Để cân bằng chuyển dịch theo chiều nghịch cần tăng nhiệt độ của hệ.',1,'Chiều nghịch là chiều thu nhiệt, được ưu tiên khi tăng nhiệt độ.'],
+['NO<sub>2</sub> là một khí độc nên chú ý nút kín ống nghiệm.',1,'Nút kín để tránh khí độc thoát ra ngoài.']]},
+{n:9,t:'Tổng hợp ammonia trong công nghiệp:',e:'N<sub>2</sub>(g) + 3H<sub>2</sub>(g) ⇌ 2NH<sub>3</sub>(g) &nbsp; Δ<sub>r</sub>H°<sub>298</sub> = −92 kJ',i:[
+['Để tăng tốc độ phản ứng, người ta sử dụng chất xúc tác là bột Fe.',1,'Fe là xúc tác, làm tăng tốc độ phản ứng.'],
+['Để cân bằng chuyển dịch theo chiều thuận cần tăng áp suất chung của hệ.',1,'Chiều thuận giảm số mol khí (4 → 2), tăng áp suất thì dịch theo chiều thuận.'],
+['Để cân bằng chuyển dịch theo chiều nghịch cần tăng nhiệt độ của hệ.',1,'Chiều nghịch thu nhiệt; tăng nhiệt độ thì dịch theo chiều nghịch.'],
+['Để cân bằng chuyển dịch theo chiều thuận cần giảm nồng độ của NH<sub>3</sub>.',1,'Giảm nồng độ sản phẩm → cân bằng dịch theo chiều thuận (tạo thêm NH<sub>3</sub>). Trong thực tế NH<sub>3</sub> được hoá lỏng và tách ra liên tục.']]},
+{n:10,t:'Sản xuất sulfuric acid: SO<sub>2</sub> bị oxi hoá bằng oxygen ở 450–500 °C, xúc tác V<sub>2</sub>O<sub>5</sub>; SO<sub>3</sub> được hấp thụ bằng dung dịch H<sub>2</sub>SO<sub>4</sub> 98% để thu oleum.',e:'2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g) &nbsp; Δ<sub>r</sub>H°<sub>298</sub> = −198,4 kJ',i:[
+['Khi tăng nhiệt độ của hệ phản ứng thì cân bằng chuyển dịch theo chiều nghịch.',1,'Phản ứng thuận toả nhiệt nên tăng nhiệt độ ưu tiên chiều nghịch.'],
+['Khi giảm nồng độ của khí SO<sub>2</sub> thì cân bằng chuyển dịch theo chiều thuận.',0,'Giảm [SO<sub>2</sub>] → cân bằng dịch theo chiều nghịch (tạo thêm SO<sub>2</sub>).'],
+['Khi tăng áp suất chung của hệ thì cân bằng chuyển dịch theo chiều thuận.',1,'Chiều thuận giảm số mol khí (3 → 2).'],
+['Khi dùng dung dịch H<sub>2</sub>SO<sub>4</sub> 98% hấp thụ SO<sub>3</sub> sinh ra thì cân bằng chuyển dịch theo chiều nghịch.',0,'Hấp thụ SO<sub>3</sub> làm giảm [SO<sub>3</sub>] → cân bằng dịch theo chiều <b>thuận</b>.']]},
+{n:11,t:'Xét các hệ cân bằng trong bình kín:',e:'(1) C(s) + H<sub>2</sub>O(g) ⇌ CO(g) + H<sub>2</sub>(g) &nbsp; Δ<sub>r</sub>H° = +131 kJ<br>(2) CO(g) + H<sub>2</sub>O(g) ⇌ CO<sub>2</sub>(g) + H<sub>2</sub>(g) &nbsp; Δ<sub>r</sub>H° = −41 kJ',i:[
+['Khi giảm áp suất chung của hệ, cân bằng (1), (2) đều không chuyển dịch.',0,'(1) có số mol khí tăng (1 → 2) nên dịch theo chiều thuận; chỉ (2) (2 → 2) không dịch.'],
+['Khi thêm một lượng hơi nước vào hệ cân bằng (1), (2) thì cân bằng đều chuyển dịch theo chiều thuận.',1,'H<sub>2</sub>O là chất phản ứng ở cả hai hệ; tăng nồng độ chất phản ứng → chiều thuận.'],
+['Khi thêm chất xúc tác vào hệ cân bằng (1) và (2) thì cân bằng đều chuyển dịch theo chiều thuận.',0,'Xúc tác không làm chuyển dịch cân bằng.'],
+['Khi tăng nhiệt độ, cân bằng (1) chuyển dịch sang phải, cân bằng (2) chuyển dịch sang trái.',1,'(1) thu nhiệt → phải; (2) toả nhiệt → trái.']]},
+{n:12,t:'Nung vôi:',e:'CaCO<sub>3</sub>(s) ⇌ CaO(s) + CO<sub>2</sub>(g) &nbsp; Δ<sub>r</sub>H°<sub>298</sub> = +179,2 kJ',i:[
+['Để thu được nhiều vôi sống hơn cần thiết kế để khí CO<sub>2</sub> thoát ra khỏi lò nhanh hơn để cân bằng chuyển dịch theo chiều thuận.',1,'Lấy bớt CO<sub>2</sub> → giảm nồng độ sản phẩm → dịch theo chiều thuận.'],
+['Tăng nhiệt độ của hệ để cân bằng chuyển dịch theo chiều thu nhiệt, tức là chiều thuận.',1,'Δ<sub>r</sub>H° &gt; 0 nên chiều thuận thu nhiệt.'],
+['Biểu thức hằng số cân bằng của phản ứng là K<sub>C</sub> = [CaO]·[CO<sub>2</sub>]/[CaCO<sub>3</sub>].',0,'Chất rắn không có mặt trong biểu thức K<sub>C</sub>: K<sub>C</sub> = [CO<sub>2</sub>].'],
+['Để làm tăng hiệu suất của phản ứng nung đá vôi nên nghiền mịn đá vôi thành bột mịn.',0,'Nghiền mịn chỉ tăng tốc độ (diện tích tiếp xúc), không làm chuyển dịch cân bằng nên không tăng hiệu suất.']]},
+{n:13,t:'Sự hô hấp của người liên quan đến phản ứng: Hb(aq) + O<sub>2</sub>(g) ⇌ HbO<sub>2</sub>(aq). Hemoglobin (Hb) hấp thụ oxygen ở phổi tạo ra HbO<sub>2</sub>.',i:[
+['Ở phổi, nồng độ oxygen lớn nhất nên cân bằng chuyển dịch sang phải.',1,'Tăng [O<sub>2</sub>] → cân bằng dịch theo chiều thuận, tạo HbO<sub>2</sub>.'],
+['Người bệnh khó thở thường dùng oxygen ở nồng độ thấp hơn bình thường để thở.',0,'Họ dùng oxygen nồng độ <b>cao hơn</b> để cân bằng dịch sang phải, tạo nhiều HbO<sub>2</sub>.'],
+['Khi lên núi cao, một số người bị đau đầu, chóng mặt do oxygen loãng làm cân bằng chuyển dịch theo chiều nghịch, giải phóng oxygen.',1,'[O<sub>2</sub>] giảm → cân bằng dịch theo chiều nghịch, HbO<sub>2</sub> giảm, cơ thể thiếu oxygen.'],
+['Nếu không khí có lẫn CO, cơ thể nhanh bị ngộ độc vì CO liên kết với Hb tạo COHb, làm giảm khả năng vận chuyển oxygen của máu.',1,'CO bám vào Hb rất bền, chiếm chỗ của O<sub>2</sub>.']]},
+{n:14,t:'Trong dung dịch muối CoCl<sub>2</sub> (màu hồng) tồn tại cân bằng:',e:'[Co(H<sub>2</sub>O)<sub>6</sub>]<sup>2+</sup> (hồng) + 4Cl<sup>−</sup> ⇌ [CoCl<sub>4</sub>]<sup>2−</sup> (xanh) + 6H<sub>2</sub>O &nbsp; Δ<sub>r</sub>H°<sub>298</sub> &gt; 0',i:[
+['Thêm từ từ HCl đặc vào hệ, dung dịch chuyển dần sang màu hồng.',0,'Tăng [Cl<sup>−</sup>] → chiều thuận → màu <b>xanh</b>.'],
+['Ngâm ống nghiệm vào cốc nước nóng, dung dịch chuyển dần sang màu xanh.',1,'Chiều thuận thu nhiệt; tăng nhiệt độ → dịch thuận → xanh.'],
+['Thêm một vài giọt dung dịch AgNO<sub>3</sub>, dung dịch chuyển dần sang màu xanh.',0,'Ag<sup>+</sup> + Cl<sup>−</sup> → AgCl↓ làm giảm [Cl<sup>−</sup>] → chiều nghịch → màu <b>hồng</b>.'],
+['Ngâm ống nghiệm vào cốc nước lạnh, dung dịch chuyển dần sang màu hồng.',1,'Giảm nhiệt độ → dịch theo chiều toả nhiệt (nghịch) → hồng.']]},
+{n:15,t:'H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g). Cho 1 mol H<sub>2</sub> và 1 mol I<sub>2</sub> vào bình kín 2 lít. Lượng HI theo thời gian được biểu diễn trên đồ thị (đọc từ đồ thị: HI ở cân bằng ≈ 1,7 mol).',e:G15,i:[
+['Nồng độ của HI ở thời điểm cân bằng là 1,7M.',0,'1,7 là <b>số mol</b>. [HI] = 1,7/2 = <b>0,85M</b>.'],
+['Nồng độ của I<sub>2</sub>, H<sub>2</sub> ở thời điểm cân bằng đều là 0,5M.',0,'HI tạo 1,7 mol dùng 0,85 mol mỗi chất; còn 0,15 mol → [H<sub>2</sub>] = [I<sub>2</sub>] = 0,075M.'],
+['Giá trị hằng số cân bằng của phản ứng là K<sub>C</sub> = 128,44.',1,'K<sub>C</sub> = 0,85² / (0,075·0,075) = 0,7225/0,005625 ≈ 128,44.'],
+['Hiệu suất của phản ứng trên là 85%.',1,'H = 0,85/1 × 100% = 85% (cũng bằng 1,7/2).']]}
+];
+const R=document.getElementById('root');
+Q.forEach(q=>{const d=document.createElement('div');d.className='q';
+d.innerHTML=`<h2>Câu ${q.n}.</h2><div>${q.t}</div>${q.e?`<div class="eq">${q.e}</div>`:''}`+
+q.i.map((x,k)=>`<div class="it ${x[1]?'T':'F'}" onclick="this.classList.toggle('show')"><div class="t"><b>${'abcd'[k]}.</b> ${x[0]}</div><div class="ans"><span class="tag">${x[1]?'ĐÚNG':'SAI'}</span>${x[2]}</div></div>`).join('');
+R.appendChild(d)});
+function all(v){document.querySelectorAll('.it').forEach(e=>e.classList.toggle('show',!!v))}
+</script></body></html>
